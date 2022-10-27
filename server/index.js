@@ -4,11 +4,14 @@ const express = require('express')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 
+const AuthRoute = require('./Routes/AuthRoute')
+
 const app = express()
 dotenv.config()
 
 app.use(bodyParser.json({limit: '30mb', extended: true}))
 app.use(bodyParser.urlencoded({limit: '30mb', extended: true}))
+app.use(cors())
 
 // ---> Server Setting <---
 
@@ -24,3 +27,7 @@ mongoose.connect(process.env.MONGO_URI, {
     if(err) return console.log(err);
     console.log("MongoDB connected...")
 })
+
+// ---> Routes <---
+
+app.use('/auth', AuthRoute)

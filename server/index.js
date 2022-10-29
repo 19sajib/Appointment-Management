@@ -5,7 +5,7 @@ const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 
 const AuthRoute = require('./Routes/AuthRoute')
-
+const AppointmentRoute = require('./Routes/AppointmentRoute')
 const app = express()
 dotenv.config()
 
@@ -31,3 +31,4 @@ mongoose.connect(process.env.MONGO_URI, {
 // ---> Routes <---
 
 app.use('/auth', AuthRoute)
+app.use('/app', AppointmentRoute)

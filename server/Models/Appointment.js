@@ -15,7 +15,7 @@ const dateSchema = new mongoose.Schema({
         type: String
     },
     slots: [slotSchema]
-})
+}, { timestamps: true })
 
 const appointmentSchema = new mongoose.Schema({
     patientId: {
@@ -49,6 +49,10 @@ const appointmentSchema = new mongoose.Schema({
         default: false
     },
     isCancelled: {
+        type: Boolean,
+        default: false
+    },
+    isApproved: {
         type: Boolean,
         default: false
     }

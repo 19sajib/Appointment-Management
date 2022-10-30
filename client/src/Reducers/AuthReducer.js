@@ -1,5 +1,5 @@
 const authReducer = (
-    state = { authdata: null, userData: null, loading: false, error: false, updateLoading: false },
+    state = { authData: null, userData: null, loading: false, error: false, updateLoading: false },
     action
 ) => {
     switch (action.type) {

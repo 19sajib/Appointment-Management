@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const slotSchema = new mongoose.Schema({
     time: {
         type: String,
+        required: true
     },
     isBooked: {
         type: Boolean,
@@ -12,7 +13,8 @@ const slotSchema = new mongoose.Schema({
 
 const dateSchema = new mongoose.Schema({
     date: {
-        type: String
+        type: String,
+        required: true
     },
     slots: [slotSchema]
 }, { timestamps: true })

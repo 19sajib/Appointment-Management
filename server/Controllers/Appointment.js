@@ -66,10 +66,21 @@ const getAppointment = async (req, res) => {
         
         res.status(201).json({oldSlot, newBooking, message: 'Your Appointment has been booked successfully.'})
     } catch (error) {
-        console.log(error)
+        res.status(500).json({message: error.message})
+    }
+}
+
+// ---> Getting All Appointment of An User <---
+
+const getAppointData = async(req, res) =>{
+    
+    try {
+        const appointData = await AppointmentModel.find({patientId:req.params.id})
+        res.status(200).json(appointData)
+    } catch (error) {
         res.status(500).json({message: error.message})
     }
 }
 
 
-module.exports = { getSlot, getDate, getAppointment }
+module.exports = { getSlot, getDate, getAppointment, getAppointData }

@@ -20,3 +20,13 @@ export const getSlot = (bookData, navigate) => async (dispatch) => {
         dispatch({type: "APPIONT_FAIL"})
     }
 }
+
+export const getAppointData = (id) => async (dispatch) => {
+    dispatch({type: "APPIONT_START"})
+    try {
+        const { data } = await AppointAPI.getAppointData(id)
+        dispatch({type: "APPOINT_DATA", data})
+    } catch (error) {
+        dispatch({type: "APPIONT_FAIL"})
+    }
+}

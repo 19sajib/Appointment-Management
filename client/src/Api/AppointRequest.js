@@ -10,4 +10,5 @@ API.interceptors.request.use((req) => {
   });
 
   export const getDate = (date) => API.post('/app/date', date)
+  export const getAppointData = (id) => API.get(`/app/user/${id}`)
   export const getSlot = (bookData, navigate) => API.post('/app/booking', bookData)

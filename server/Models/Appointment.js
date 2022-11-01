@@ -1,6 +1,10 @@
 const mongoose = require('mongoose')
 
 const slotSchema = new mongoose.Schema({
+    date: {
+        type: String,
+        required: true
+    },
     time: {
         type: String,
         required: true
@@ -10,14 +14,6 @@ const slotSchema = new mongoose.Schema({
         default: false
     }
 }, {timestamps: true})
-
-const dateSchema = new mongoose.Schema({
-    date: {
-        type: String,
-        required: true
-    },
-    slots: [slotSchema]
-}, { timestamps: true })
 
 const appointmentSchema = new mongoose.Schema({
     patientId: {
@@ -32,19 +28,21 @@ const appointmentSchema = new mongoose.Schema({
         type: String,
         require: true
     },
-    dateId: {
+    patientContact: {
         type: String,
         required: true
     },
     date: {
-        type: String
+        type: String,
+        required: true
+    },
+    time: {
+        type: String,
+        required: true
     },
     slotId: {
         type: String,
         required: true
-    },
-    slotTime: {
-        type: String
     },
     isDelayed: {
         type: Boolean,
@@ -54,18 +52,12 @@ const appointmentSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    isApproved: {
-        type: Boolean,
-        default: false
-    }
 }, { timestamps: true })
 
 const SlotModel = mongoose.model('Slot', slotSchema)
-const DateModel = mongoose.model('Date', dateSchema)
 const AppointmentModel = mongoose.model('Appointment', appointmentSchema)
 
 module.exports = {
     AppointmentModel,
-    SlotModel,
-    DateModel,
+    SlotModel
 }

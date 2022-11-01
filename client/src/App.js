@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 
 import Home from './Pages/Home'
 import Auth from './Pages/Auth'
+import Slots from "./Pages/Slots";
 
 const App = () => {
 
@@ -14,6 +15,7 @@ const App = () => {
           <Routes>
               <Route path="/" exact element={<Home />} />
               <Route path="/auth" exact element={user ? <Navigate to="/" />:<Auth />} />
+              <Route path="/take-slot/:date" exact element={user ? <Slots />:<Auth />} />
           </Routes>
       </BrowserRouter>
     </div>

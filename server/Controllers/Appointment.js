@@ -1,33 +1,16 @@
-const { DateModel, SlotModel, AppointmentModel } = require('../Models/Appointment')
+const { SlotModel, AppointmentModel } = require('../Models/Appointment')
 
 
-// ---> Checking Slot Avability Helper Function <---
-
-const slotHelper = async ({time,date}) =>{
-    const oldDate = await DateModel.findOne({date})
-    const oldTime = await SlotModel.findOne({time})
-    if(!oldTime) {
-        const newTime = new SlotModel(time)
-        await newTime.save()
-        oldDate.slots.push(newTime)
-        await oldDate.save()
-        return {oldDate, newTime}
-    }
-    return {oldDate,oldTime}
-}
 
 
-// ---> Checking / Creating Schedule of A Day <---
+
+// ---> Getting All The Schedule of A Day <---
 
 const getDate = async (req, res) => {
     const {date} = req.body
     try {
-        const oldDate = await DateModel.findOne({date})
-        if (oldDate) return res.status(200).json(oldDate)
-
-        const newDate = new DateModel(req.body)
-        await newDate.save()
-        res.status(201).json(newDate)
+        const dateTime = await SlotModel.find({date})
+        res.status(200).json(dateTime)
     } catch (error) {
         res.status(500).json({message: error.message})
     }
@@ -39,35 +22,51 @@ const getDate = async (req, res) => {
 const getSlot = async (req, res) => {
     const {date, time} = req.body
     try {
-        const oldDate = await DateModel.findOne({date})
-        const oldTime = await SlotModel.findOne({time})
-        if(!oldTime) {
-        const newTime = new SlotModel({time})
-        await newTime.save()
-        oldDate.slots.push(newTime)
-        await oldDate.save()
-        return res.status(200).json({oldDate, newTime})
-        }
-        res.status(200).json({oldDate,oldTime})
+        const timeDate = await SlotModel.findOne({date, time})
+        if(timeDate) return res.status(200).json(timeDate)
+        const newTimeDate = new SlotModel(req.body)
+        await newTimeDate.save()
+        return res.status(201).json(newTimeDate)
     } catch (error) {
         res.status(500).json({message: error.message})
     }
 }
 
 
-// ---> Asking For Appointment <---
+// ---> Making An Appointment <---
 
 const getAppointment = async (req, res) => {
-    const {patientId, patientName, patientEmail, date, slotTime, dateId, slotId} = req.body
-
+    const {date, time} = req.body
     try {
-        const updateSlot = await SlotModel.findById(slotId)
-        updateSlot.isBooked = true
-        await updateSlot.save()
+        // ---> Checking Slot Avability <---
+
+        const oldSlot = await SlotModel.findOne({date, time})
+        if(!oldSlot){
+            const newSlot = new SlotModel({date, time, isBooked:true})
+            await newSlot.save()
+            req.body.slotId = newSlot._id;
+   
+            const newBooking = new AppointmentModel(req.body)
+            newBooking.save()
+            return res.status(201).json({newSlot, newBooking})
+            
+        }
+        
+        if(oldSlot.isBooked) return res.status(403).json({message: "Someone just booked the slot, please try another slot!"})
+        
+        oldSlot.isBooked = true
+        await oldSlot.save()
+
+        req.body.slotId = oldSlot._id
+
+        // ---> Creating An Appointment <---
+
         const newBooking = new AppointmentModel(req.body)
         newBooking.save()
-        res.status(200).json({updateSlot, newBooking})
+        
+        res.status(201).json({oldSlot, newBooking, message: 'Your Appointment has been booked successfully.'})
     } catch (error) {
+        console.log(error)
         res.status(500).json({message: error.message})
     }
 }

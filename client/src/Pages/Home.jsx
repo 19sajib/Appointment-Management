@@ -28,7 +28,7 @@ const Home = () => {
     const date = value.format('YYYY-MM-DD')
     dispatch(getDate({"date": date}))
 
-    navigate('/take-slot')
+    navigate(`/take-slot/${date}`)
     
   }
 

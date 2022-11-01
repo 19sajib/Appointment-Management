@@ -9,6 +9,9 @@ const appointReducer = (
         case "GOT_DATE":
             return { ...state, dateData: action.data, loading: false, error: false }
 
+        case "GOT_SLOT":
+            return { ...state, appointData: action.data, loading: false, error: false }
+
         case 'APPIONT_FAIL':
             return {...state, appointData: null, loading: false, error: true}
 

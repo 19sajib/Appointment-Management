@@ -70,6 +70,24 @@ const getAppointment = async (req, res) => {
     }
 }
 
+// ---> Cancellign An Appiontment <--
+
+const cancelAppointment = async (req,res) => {
+
+    try {
+        const oldBooking = await AppointmentModel.findById(req.params.id)
+        if(!oldBooking) return res.status(403).json({message: "There is no such appointment"})
+        oldBooking.isCancelled = true;
+        await oldBooking.save()
+        const oldSlot = await SlotModel.findById(oldBooking.slotId)
+        oldSlot.isBooked = false
+        await oldSlot.save()
+        res.status(200).json({oldBooking, message: "Your Appointment Cancelled Successfully..."})
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
+}
+
 // ---> Getting All Appointment of An User <---
 
 const getAppointData = async(req, res) =>{
@@ -83,4 +101,4 @@ const getAppointData = async(req, res) =>{
 }
 
 
-module.exports = { getSlot, getDate, getAppointment, getAppointData }
+module.exports = { getSlot, getDate, getAppointment, getAppointData, cancelAppointment }

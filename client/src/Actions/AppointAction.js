@@ -30,3 +30,13 @@ export const getAppointData = (id) => async (dispatch) => {
         dispatch({type: "APPIONT_FAIL"})
     }
 }
+
+export const cancelAppointment = (id) => async (dispatch) => {
+    dispatch({type: "APPIONT_START"})
+    try {
+        const { data } = await AppointAPI.cancelAppointment(id)
+        dispatch({type: "APPOINT_CANCEL", data})
+    } catch (error) {
+        dispatch({type: "APPIONT_FAIL"})
+    }
+}

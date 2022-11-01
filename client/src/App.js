@@ -6,6 +6,7 @@ import Auth from './Pages/Auth'
 import Slots from "./Pages/Slots";
 import Success from "./Pages/Success";
 import UserAppoint from "./Pages/UserAppoint";
+import Navbar from "./Components/Navbar";
 
 const App = () => {
 
@@ -13,6 +14,7 @@ const App = () => {
 
   return (
     <div style={{margin: '10px'}}>
+      <Navbar />
       <BrowserRouter>
           <Routes>
               <Route path="/" exact element={<Home />} />

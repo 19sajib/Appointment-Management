@@ -100,5 +100,23 @@ const getAppointData = async(req, res) =>{
     }
 }
 
+// ---> Getting All The Appointment <---
 
-module.exports = { getSlot, getDate, getAppointment, getAppointData, cancelAppointment }
+const allAppointment = async (req, res) => {
+    const { page } = req.query;
+    try {
+        const LIMIT = 6
+        // get the starting index of every page
+        const startIndex = (Number(page)-1) * LIMIT
+        const total = await AppointmentModel.countDocuments()
+        //getting post for given page number
+        const appointData = await AppointmentModel.find().sort({createdAt: 1}).limit(LIMIT).skip(startIndex)
+
+        res.status(200).json({appointData, currentPage: Number(page), numberOfPages: Math.ceil(total / LIMIT)})
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
+}
+
+
+module.exports = { getSlot, getDate, getAppointment, getAppointData, cancelAppointment, allAppointment }

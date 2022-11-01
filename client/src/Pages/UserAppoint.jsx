@@ -10,11 +10,12 @@ const UserAppoint = () => {
     const dispatch = useDispatch()
     const appointData = useSelector((state)=>state.appointReducer.appointData)
     console.log(appointData)
+
     React.useEffect(() => {
         dispatch(getAppointData(id))
     }, [])
 
-    if(!appointData) return <h2>Loading...</h2>
+    if(!appointData?.length) return <h2>Loading...</h2>
 
   return (
     <Box sx={{ flexGrow: 1, margin: '15px'}} >

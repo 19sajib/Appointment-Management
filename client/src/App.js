@@ -7,6 +7,7 @@ import Slots from "./Pages/Slots";
 import Success from "./Pages/Success";
 import UserAppoint from "./Pages/UserAppoint";
 import Navbar from "./Components/Navbar";
+import AdminDashboard from "./Pages/AdminDashboard";
 
 const App = () => {
 
@@ -19,6 +20,8 @@ const App = () => {
           <Routes>
               <Route path="/" exact element={<Home />} />
               <Route path="/success" exact element={user ? <Success />:<Auth />} />
+              <Route path="/admin-dashboard" exact element={user ? <AdminDashboard />:<Auth />} />
+              <Route path="/admin-dashboard/search" exact element={user ? <AdminDashboard />:<Auth />} />
               <Route path="/appoint-data/:id" exact element={user ? <UserAppoint />:<Auth />} />
               <Route path="/auth" exact element={user ? <Navigate to="/" />:<Auth />} />
               <Route path="/take-slot/:date" exact element={user ? <Slots />:<Auth />} />

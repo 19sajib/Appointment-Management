@@ -13,6 +13,13 @@ const appointReducer = (
         case "APPOINT_DATA":
             return { ...state, appointData: action.data, loading: false, error: false }
         
+        case "ALL_APPOINT":
+            return { ...state, 
+                appointData: action.data.appointData, 
+                currentPage: action.data.currentPage,
+                numberOfPages: action.data.numberOfPages,
+                loading: false, error: false }
+        
         case "APPOINT_CANCEL":
             console.log(action.data.oldBooking)
             return { ...state, appointData: state.appointData.map((data)=> data._id === action.data.oldBooking._id ? action.data.oldBooking : data), loading: false, error: false }

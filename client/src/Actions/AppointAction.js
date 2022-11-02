@@ -51,6 +51,16 @@ export const cancelAppointment = (id) => async (dispatch) => {
     }
 }
 
+export const rescheduleAppointment = (id, dateTime) => async (dispatch) => {
+    dispatch({type: "APPIONT_START"})
+    try {
+        const { data } = await AppointAPI.rescheduleAppointment(id, dateTime)
+        dispatch({type: "RESCHEDULE_APPOINT", data})
+    } catch (error) {
+        dispatch({type: "APPIONT_FAIL"})
+    }
+}
+
 export const singleAppointment = (id) => async (dispatch) => {
     dispatch({type: "APPIONT_START"})
     try {

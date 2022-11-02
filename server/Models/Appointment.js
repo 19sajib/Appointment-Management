@@ -44,7 +44,7 @@ const appointmentSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    isDelayed: {
+    isRescheduled: {
         type: Boolean,
         default: false
     },

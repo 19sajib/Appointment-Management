@@ -90,7 +90,13 @@ const headCells = [
     id: 'isCancelled',
     numeric: false,
     disablePadding: false,
-    label: 'Cancel Status',
+    label: 'Cancelled?',
+  },
+  {
+    id: 'isRescheduled',
+    numeric: false,
+    disablePadding: false,
+    label: 'Rescheduled?',
   },
   {
     id: 'link',
@@ -264,6 +270,7 @@ const AdminDashboard = () =>  {
                       <TableCell align="right">{row.date}</TableCell>
                       <TableCell align="right">{row.time}</TableCell>
                       <TableCell align="left">{row.isCancelled ? 'true' : 'false'}</TableCell>
+                      <TableCell align="left">{row.isRescheduled ? 'true' : 'false'}</TableCell>
                       <TableCell align="left" component="a" href={`/appoint/${row._id}`}>See More</TableCell>
                     </TableRow>
                   );

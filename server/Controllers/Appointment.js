@@ -10,6 +10,7 @@ const getDate = async (req, res) => {
     const {date} = req.body
     try {
         const dateTime = await SlotModel.find({date})
+
         res.status(200).json(dateTime)
     } catch (error) {
         res.status(500).json({message: error.message})
@@ -130,7 +131,64 @@ const singleAppointment = async (req, res) => {
     }
 }
 
+// --->  Reschedule An Appointment <---
+
+const  rescheduleAppointment = async (req, res) => {
+    const {date, time} = req.body;
+
+    try {
+        const appointData = await AppointmentModel.findById(req.params.id)
+        if(!appointData) return res.status(403).json({message: "There is no such appointment"})
+        
+        // ---> Checking New Slot Avability <---
+
+        const oldSlot = await SlotModel.findOne({date, time})
+        if(!oldSlot){
+            const newSlot = new SlotModel({date, time, isBooked:true})
+            await newSlot.save()
+
+            // ---> Releasing Old Slot <---
+            const slot = await SlotModel.findById(appointData.slotId)
+            slot.isBooked = false
+            await slot.save()
+
+            // ---> Rescheduling Appointment <---
+            appointData.slotId = newSlot._id;
+            appointData.date = date
+            appointData.time = time
+            appointData.isRescheduled = true
+
+            await appointData.save()
+            return res.status(201).json(appointData)
+            
+        }
+        
+        if(oldSlot.isBooked) return res.status(403).json({message: "Someone just booked the slot, please try another slot!"})
+        
+        oldSlot.isBooked = true
+        await oldSlot.save()
+
+        // ---> Releasing Old Slot <---
+        const slot = await SlotModel.findById(appointData.slotId)
+        slot.isBooked = false
+        await slot.save()
+
+        // ---> Rescheduling Appointment <---
+        appointData.slotId = oldSlot._id;
+        appointData.date = date
+        appointData.time = time
+        appointData.isRescheduled = true
+        
+        await appointData.save()
+        
+        res.status(201).json(appointData)
+
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
+}
 
 module.exports = { getSlot, getDate, getAppointment, 
                    getAppointData, cancelAppointment, 
-                   singleAppointment, allAppointment }
+                   singleAppointment, allAppointment,
+                   rescheduleAppointment }

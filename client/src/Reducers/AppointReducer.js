@@ -7,6 +7,7 @@ const appointReducer = (
             return {...state, loading: true, error: false }
         
         case "GOT_DATE":
+            console.log(action.data)
             return { ...state, dateData: action.data, loading: false, error: false }
 
         case "GOT_SLOT":
@@ -14,6 +15,7 @@ const appointReducer = (
             return { ...state, appointData: action.data, loading: false, error: false }
 
         case "SINGLE_APPOINT":
+        case "RESCHEDULE_APPOINT":
             return { ...state, singleData: action.data, loading: false, error: false }
         
         case "ALL_APPOINT":

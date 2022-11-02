@@ -5,7 +5,7 @@ import HealthAndSafetyIcon from '@mui/icons-material/HealthAndSafety';
 import BlockIcon from '@mui/icons-material/Block';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import { useNavigate, useParams } from 'react-router-dom';
-import {getSlot} from '../Actions/AppointAction'
+import {getSlot, rescheduleAppointment} from '../Actions/AppointAction'
 import { useDispatch } from 'react-redux';
 
 
@@ -21,56 +21,52 @@ const timeSlots = [
     "11:41-12:00"
 ]
 
-const Slots = () => {
+const Slots = ({dateData, date, time}) => {
 
     const user = useSelector((state)=> state.authReducer.authData)
-    const dateData = useSelector((state)=> state?.appointReducer?.dateData)
-    const {date} = useParams()
+    const {id} = useParams()
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const [bookData, setBookData] = React.useState({
-        "patientId": user._id, 
-        "patientName": user.fullName,
-        "patientEmail": user.email,
-        "patientContact": user.contact,
+    const [dateTime, setDateTime] = React.useState({
         "date": date,
-        "time": ""
+        "time": time
     })
 
     const handleClick = (e) => {
         e.preventDefault()
-        console.log(bookData)
-        dispatch(getSlot(bookData, navigate))
+        console.log(dateTime)
+        dispatch(rescheduleAppointment(id, dateTime))
     }
+    if(!dateData) return <h1>Loading...</h1>
   return (
     <Box>
     <Typography variant='h4' align="center" color="secondary">All of the slots of day: {date} Between 9-12 PM.</Typography>
     <Divider variant="middle" />
-    <Stack direction="row" flexWrap="wrap" textAlign="center" justifyContent="center" alignItems="start" gap={3} margin="10px">
+    <Stack direction="row" flexWrap="wrap" textAlign="center" justifyContent="center" alignItems="start" gap={1} margin="10px">
         {timeSlots.map((ts, id)=> (
-            <IconButton key={id} onClick={(e)=>setBookData({...bookData, time:ts})} >
-            <Paper elevation={5} key={id} sx={{margin: '7px', padding: '7px', backgroundColor: bookData.time===ts? 'yellow': ''}} >
+            <IconButton key={id} onClick={(e)=>setDateTime({...dateTime, time:ts})} >
+            <Paper elevation={5} key={id} sx={{margin: '7px', padding: '7px', backgroundColor: dateTime.time===ts? 'yellow': ''}} >
             <Box sx={{color: 'green', display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
                  <HealthAndSafetyIcon />
                  <Typography variant='h6'>Time Slot: {ts}</Typography>
             </Box>
             <Box>
                 {dateData.map((data)=> (
-                   <div key={data._id}> {(data.time===ts && data.isBooked===true)&& 
+                   <div> {(data?.time===ts && data?.isBooked===true)&&
                     <Box sx={{color: "red", display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
                     <BlockIcon/>
                     <Typography variant='h6'>This slot has been taken</Typography>
                     </Box>
                     }</div>
-                ))}
+                 ))}
             </Box>
             </Paper>
             </IconButton>
             ))}
     </Stack>
     <Box textAlign="center">
-    <Typography variant='h6' >Please, select your desired slot and click the button down below to make an appointment.</Typography>
-    <Button onClick={handleClick} sx={{marginTop: '15px'}} disabled={!bookData.time} variant="outlined" size="large">Make An Appointment Now</Button>
+    <Typography variant='h6' >Select your desired slot and click the button down below to to reschedule your appointment.</Typography>
+    <Button onClick={handleClick} sx={{marginTop: '15px'}} disabled={!dateTime.time} variant="outlined" size="large">Reschedule Your Appointment</Button>
     </Box>
     </Box>
   )

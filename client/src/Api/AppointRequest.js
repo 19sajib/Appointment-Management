@@ -13,5 +13,6 @@ API.interceptors.request.use((req) => {
   export const getAppointData = (id) => API.get(`/app/user/${id}`)
   export const cancelAppointment = (id) => API.get(`/app/cancel/${id}`)
   export const singleAppointment = (id) => API.get(`/app/single/${id}`)
+  export const rescheduleAppointment = (id, dateTime) => API.post(`/app/reschedule/${id}`,dateTime)
   export const allAppointment = (page) => API.get(`/app/all?page=${page}`)
   export const getSlot = (bookData, navigate) => API.post('/app/booking', bookData)

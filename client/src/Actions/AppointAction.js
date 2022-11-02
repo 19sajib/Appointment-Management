@@ -7,6 +7,7 @@ export const getDate = (date) => async (dispatch) => {
         dispatch({type: "GOT_DATE", data})
     } catch (error) {
         dispatch({type: "APPIONT_FAIL"})
+        dispatch({ type: 'ERROR', error})
     }
 }
 
@@ -18,6 +19,7 @@ export const getSlot = (bookData, navigate) => async (dispatch) => {
         navigate('/success')
     } catch (error) {
         dispatch({type: "APPIONT_FAIL"})
+        dispatch({ type: 'ERROR', error})
     }
 }
 
@@ -26,8 +28,10 @@ export const getAppointData = (id) => async (dispatch) => {
     try {
         const { data } = await AppointAPI.getAppointData(id)
         dispatch({type: "APPOINT_DATA", data})
+        dispatch({ type: 'SUCCESS', data })
     } catch (error) {
         dispatch({type: "APPIONT_FAIL"})
+        dispatch({ type: 'ERROR', error})
     }
 }
 
@@ -38,6 +42,7 @@ export const allAppointment = (page) => async (dispatch) => {
         dispatch({type: "ALL_APPOINT", data})
     } catch (error) {
         dispatch({type: "APPIONT_FAIL"})
+        dispatch({ type: 'ERROR', error})
     }
 }
 
@@ -46,8 +51,10 @@ export const cancelAppointment = (id) => async (dispatch) => {
     try {
         const { data } = await AppointAPI.cancelAppointment(id)
         dispatch({type: "APPOINT_CANCEL", data})
+        dispatch({ type: 'SUCCESS', data })
     } catch (error) {
         dispatch({type: "APPIONT_FAIL"})
+        dispatch({ type: 'ERROR', error})
     }
 }
 
@@ -56,8 +63,10 @@ export const rescheduleAppointment = (id, dateTime) => async (dispatch) => {
     try {
         const { data } = await AppointAPI.rescheduleAppointment(id, dateTime)
         dispatch({type: "RESCHEDULE_APPOINT", data})
+        dispatch({ type: 'RESCHEDULE'})
     } catch (error) {
         dispatch({type: "APPIONT_FAIL"})
+        dispatch({ type: 'ERROR', error})
     }
 }
 
@@ -68,5 +77,6 @@ export const singleAppointment = (id) => async (dispatch) => {
         dispatch({type: "SINGLE_APPOINT", data})
     } catch (error) {
         dispatch({type: "APPIONT_FAIL"})
+        dispatch({ type: 'ERROR', error})
     }
 }

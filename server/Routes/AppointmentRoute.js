@@ -1,7 +1,7 @@
 const express = require('express')
 
 const { getAppointment, getAppointData, allAppointment, cancelAppointment, getDate, getSlot, singleAppointment, rescheduleAppointment } = require('../Controllers/Appointment')
-import { verifyToken, verifyTokenAndAdmin, verifyTokenAndAuthorization } from '../Middleware/verifyToken.js'
+const { verifyToken, verifyTokenAndAdmin, verifyTokenAndAuthorization } = require('../Middleware/verifyToken')
 
 const router = express.Router()
 

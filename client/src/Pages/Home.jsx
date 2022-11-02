@@ -33,17 +33,17 @@ const Home = () => {
   }
 
   return (
-    <Stack sx={{display: 'flex', flexDirection: 'column'}}>
+    <Stack sx={{display: 'flex', flexDirection: 'column', marginTop: '10px'}}>
       <Box sx={{display: 'flex', alignItems: 'center'}}>
-        <div>
+        <Box sx={{width: '50%'}} >
       <Typography variant='h5' color="primary">
          Wanna Book An Appointment?
       </Typography>
       <Typography variant='h5' color="primary" >
          Please, Select Your Desired Date & Click Find Slot Button!
       </Typography>
-        </div>
-        <div>
+        </Box>
+        <Box sx={{width: '50%'}}>
       <LocalizationProvider elevation={6} dateAdapter={AdapterDayjs}>
       <StaticDatePicker
         orientation="landscape"
@@ -63,7 +63,7 @@ const Home = () => {
         />
         <Button variant="outlined" size="large" sx={{float: 'right'}} onClick={handleDate}>Find Slots</Button>
       </LocalizationProvider>
-        </div>
+        </Box>
         </Box>
     </Stack>
   )

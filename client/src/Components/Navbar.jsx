@@ -83,7 +83,7 @@ const Navbar = () => {
           {user ? <Box sx={{ flexGrow: 0, display: 'flex',alignItems: 'center' }}>
           <Typography 
             variant="h5"
-            href={`/appoint-data/${user._id}`}
+            href={user?.isAdmin? `/admin-dashboard` : `/appoint-data/${user._id}`}
             noWrap
             component="a"
             sx={{
@@ -96,7 +96,7 @@ const Navbar = () => {
             color: 'inherit',
             textDecoration: 'none',
             }}
-            >Your Appointments</Typography>
+            >{user?.isAdmin ? 'Admin Dashboard' : 'Your Appointments'} </Typography>
           <Typography 
             variant="h5"
             href={`/user/${user._id}`}
@@ -137,7 +137,7 @@ const Navbar = () => {
                 <MenuItem onClick={handleCloseUserMenu}>
                   <Typography 
                   textAlign="center" 
-                  href={`/appoint-data/${user._id}`}
+                  href={user?.isAdmin? `/admin-dashboard` : `/appoint-data/${user._id}`}
                   noWrap
                   component="a"
                   sx={{ 
@@ -145,7 +145,7 @@ const Navbar = () => {
                     color: 'inherit',
                   }}
                   >
-                    Your Appointments
+                  {user?.isAdmin ? 'Admin Dashboard' : 'Your Appointments'}
                 </Typography>
                 </MenuItem>
                 <MenuItem onClick={handleCloseUserMenu}>

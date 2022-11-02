@@ -118,5 +118,19 @@ const allAppointment = async (req, res) => {
     }
 }
 
+// ---> Getting Single Appointment Data <---
 
-module.exports = { getSlot, getDate, getAppointment, getAppointData, cancelAppointment, allAppointment }
+const singleAppointment = async (req, res) => {
+    try {
+        const appointData = await AppointmentModel.findById(req.params.id)
+        if(!appointData) return res.status(403).json({message: "There is no such appointment"})
+        res.status(200).json(appointData)
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
+}
+
+
+module.exports = { getSlot, getDate, getAppointment, 
+                   getAppointData, cancelAppointment, 
+                   singleAppointment, allAppointment }

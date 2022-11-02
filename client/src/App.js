@@ -8,6 +8,7 @@ import Success from "./Pages/Success";
 import UserAppoint from "./Pages/UserAppoint";
 import Navbar from "./Components/Navbar";
 import AdminDashboard from "./Pages/AdminDashboard";
+import SingleAppoint from "./Pages/SingleAppoint";
 
 const App = () => {
 
@@ -22,6 +23,7 @@ const App = () => {
               <Route path="/success" exact element={user ? <Success />:<Auth />} />
               <Route path="/admin-dashboard" exact element={user ? <AdminDashboard />:<Auth />} />
               <Route path="/admin-dashboard/search" exact element={user ? <AdminDashboard />:<Auth />} />
+              <Route path="/appoint/:id" exact element={user ? <SingleAppoint />:<Auth />} />
               <Route path="/appoint-data/:id" exact element={user ? <UserAppoint />:<Auth />} />
               <Route path="/auth" exact element={user ? <Navigate to="/" />:<Auth />} />
               <Route path="/take-slot/:date" exact element={user ? <Slots />:<Auth />} />

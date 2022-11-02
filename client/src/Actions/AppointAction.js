@@ -50,3 +50,13 @@ export const cancelAppointment = (id) => async (dispatch) => {
         dispatch({type: "APPIONT_FAIL"})
     }
 }
+
+export const singleAppointment = (id) => async (dispatch) => {
+    dispatch({type: "APPIONT_START"})
+    try {
+        const { data } = await AppointAPI.singleAppointment(id)
+        dispatch({type: "SINGLE_APPOINT", data})
+    } catch (error) {
+        dispatch({type: "APPIONT_FAIL"})
+    }
+}

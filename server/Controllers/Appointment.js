@@ -188,7 +188,22 @@ const  rescheduleAppointment = async (req, res) => {
     }
 }
 
+// ---> Search By Patient Name <---
+
+const searchByName = async (req, res)=> {
+    const { searchQuery } = req.query;
+    const { searchType } = req.body
+    console.log(searchType)
+    try {
+        const patient = new RegExp(searchQuery, "i");
+        const appointData = await AppointmentModel.find({searchType: patient})
+        res.status(201).json(appointData)
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
+}
+
 module.exports = { getSlot, getDate, getAppointment, 
                    getAppointData, cancelAppointment, 
                    singleAppointment, allAppointment,
-                   rescheduleAppointment }
+                   rescheduleAppointment, searchByName }

@@ -22,7 +22,7 @@ const signUpUser = async (req, res) => {
         const user = await newUser.save()    
 
         const token = jwt.sign({
-            id: user._id, email: user.email
+            id: user._id, email: user.email, isAdmin: user.isAdmin
         }, process.env.JWT_SECRET_KEY , {
             expiresIn: '24h'
         })
@@ -48,7 +48,7 @@ const signInUser = async (req, res) => {
         if(!user) return res.status(401).json('Invalid Credentials...')
 
         const token = jwt.sign({
-            id: user._id, email: user.email
+            id: user._id, email: user.email,isAdmin: user.isAdmin
         }, process.env.JWT_SECRET_KEY, {
             expiresIn: '24h'
         })

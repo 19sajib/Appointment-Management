@@ -18,6 +18,7 @@ import Link from '@mui/material/Link'
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { allAppointment } from '../Actions/AppointAction'
+import Search from '../Components/Search';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -169,7 +170,7 @@ function EnhancedTableToolbar(props) {
         >
           List of Appointments
         </Typography>
-        {/* //Search Button Could be Here */}
+        <Search />
     </Toolbar>
   );
 }

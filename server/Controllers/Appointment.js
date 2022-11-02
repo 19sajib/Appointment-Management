@@ -1,9 +1,6 @@
 const { SlotModel, AppointmentModel } = require('../Models/Appointment')
 
 
-
-
-
 // ---> Getting All The Schedule of A Day <---
 
 const getDate = async (req, res) => {
@@ -107,10 +104,11 @@ const allAppointment = async (req, res) => {
     const { page } = req.query;
     try {
         const LIMIT = 6
-        // get the starting index of every page
+        // Get the starting index of every page
         const startIndex = (Number(page)-1) * LIMIT
         const total = await AppointmentModel.countDocuments()
-        //getting post for given page number
+
+        //Getting post for given page number
         const appointData = await AppointmentModel.find().sort({createdAt: 1}).limit(LIMIT).skip(startIndex)
 
         res.status(200).json({appointData, currentPage: Number(page), numberOfPages: Math.ceil(total / LIMIT)})
@@ -194,11 +192,13 @@ const searchAppointmentData = async (req, res)=> {
     const { searchQuery } = req.query;
     const { searchType } = req.body
     try {
+        // Can't use RegExp on Mongoose ObjectId
         if(searchType==='_id') {
             const appointData = await AppointmentModel.find({[searchType]:searchQuery})
             return res.status(201).json(appointData)
         }
 
+        // Using RegExp on Search Query Before Making Search
         const query = new RegExp(searchQuery, "i");
 
         const appointData = await AppointmentModel.find({[searchType]:query})

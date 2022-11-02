@@ -13,6 +13,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { searchAppointmentData } from '../Actions/AppointAction';
 
 function useQuery() {
     return new URLSearchParams(useLocation().search);
@@ -21,7 +22,7 @@ function useQuery() {
 const Search = () => {
 
     const [open, setOpen] = React.useState(false);
-    const [searchType, setSearchType] = React.useState('');
+    const [searchType, setSearchType] = React.useState({searchType:""});
     const query = useQuery()
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -30,7 +31,7 @@ const Search = () => {
     const [search, setSearch] = React.useState('');
   
     const handleChange = (event) => {
-        setSearchType(event.target.value);
+        setSearchType({searchType:[event.target.value]});
     };
   
     const handleClickOpen = () => {
@@ -46,10 +47,10 @@ const Search = () => {
     const searchAppointment = (e, reason) => {
         console.log({search, searchType})
         if (search.trim()) {
-        //   dispatch(getPostsBySearch({ search}));
+          dispatch(searchAppointmentData(search,searchType));
           navigate(`/admin-dashboard/search?searchQuery=${search || 'none'}`);
         } else {
-        //   navigate('/posts');
+            navigate(`/admin-dashboard?page=1`)
         }
         if (reason !== 'backdropClick') {
             setOpen(false);
@@ -83,7 +84,7 @@ const Search = () => {
               <InputLabel htmlFor="demo-dialog-native">Search By</InputLabel>
               <Select
                 native
-                value={searchType}
+                value={searchType.searchType}
                 onChange={handleChange}
                 input={<OutlinedInput label="Age" id="demo-dialog-native" />}
               >
@@ -91,7 +92,7 @@ const Search = () => {
                 <option value="patientName"> Patient Name</option>
                 <option value="patientContact">Patient Contact</option>
                 <option value="patientId">Patient ID</option>
-                <option value="appointmentId">Appointment ID</option>
+                <option value="_id">Appointment ID</option>
               </Select>
             </FormControl>
             <FormControl sx={{ m: 1, minWidth: 120 }}>

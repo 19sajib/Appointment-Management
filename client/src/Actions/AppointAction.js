@@ -46,6 +46,17 @@ export const allAppointment = (page) => async (dispatch) => {
     }
 }
 
+export const searchAppointmentData = (search, searchType) => async (dispatch) => {
+    dispatch({type: "APPIONT_START"})
+    try {
+        const { data } = await AppointAPI.searchAppointmentData(search, searchType)
+        dispatch({type: "SEARCH_APPOINT", data})
+    } catch (error) {
+        dispatch({type: "APPIONT_FAIL"})
+        dispatch({ type: 'ERROR', error})
+    }
+}
+
 export const cancelAppointment = (id) => async (dispatch) => {
     dispatch({type: "APPIONT_START"})
     try {

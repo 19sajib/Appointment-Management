@@ -186,11 +186,11 @@ const AdminDashboard = () =>  {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
   const [selected, setSelected] = React.useState([]);
-  const query = useQuery();
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const query = useQuery();
   const page = query.get('page') || 1
-  console.log(page)
+  const searchQuery = query.get('searchQuery');
   const [dense, setDense] = React.useState(false);
 
 
@@ -279,19 +279,20 @@ const AdminDashboard = () =>  {
             </TableBody>
           </Table>
         </TableContainer>
+        {!searchQuery &&
         <Pagination
         sx={{justifyContent:"center",
         display:'flex', marginTop: '5px',
         button:{color: 'green'}}}
         color='secondary'
-        page={page||currentPage}
+        page={Number(page)||currentPage}
         count={numberOfPages}
         onChange={(event, value) => handleChangePage(event,value)}
         size="large"
         variant='outlined'
         hideNextButton={true}
         hidePrevButton={true}
-        />
+        /> }
       </Paper>
     </Box>
   );

@@ -12,6 +12,7 @@ const appointReducer = (
 
         case "GOT_SLOT":
         case "APPOINT_DATA":
+        case "SEARCH_APPOINT":
             return { ...state, appointData: action.data, loading: false, error: false }
 
         case "SINGLE_APPOINT":

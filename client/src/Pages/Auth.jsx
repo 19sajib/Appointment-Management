@@ -118,7 +118,7 @@ const Auth = () => {
                   fullWidth
                   variant="contained"
                   sx={{ mt: 3, mb: 2 }}
-                  disable={loading}
+                  disabled={loading}
                 >
                 { isSignUp ? 'Sign Up' : 'Sign In'}
                 </Button>

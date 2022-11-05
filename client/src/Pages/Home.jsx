@@ -17,7 +17,8 @@ const Home = () => {
   const navigate = useNavigate()
 
   const user = useSelector((state)=> state?.authReducer?.authData)
-
+  const loading = useSelector((state)=> state.authReducer.lodaing)
+  
   const [value, setValue] = React.useState(dayjs(today));
 
   const handleDate = (e) => {
@@ -61,7 +62,7 @@ const Home = () => {
           },
         }}
         />
-        <Button variant="outlined" size="large" sx={{float: 'right'}} onClick={handleDate}>Find Slots</Button>
+        <Button disabled={loading} variant="outlined" size="large" sx={{float: 'right'}} onClick={handleDate}>Find Slots</Button>
       </LocalizationProvider>
         </Box>
         </Box>

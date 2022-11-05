@@ -1,9 +1,16 @@
 import React from 'react'
 import { Paper, Typography} from '@mui/material'
+import { useSelector } from 'react-redux'
+
+import Loading from './Loading'
 
 const Card = ({data}) => {
   
-    if(!data) return <h1>Loading...</h1>
+  const loading = useSelector((state)=> state.authReducer.lodaing)
+
+  if(loading) return <Loading />
+
+  if(!data) return <h1>No Data Found...</h1>
 
   return (
     <Paper elevation={4} sx={{padding: '10px', margin: 'auto',}}>

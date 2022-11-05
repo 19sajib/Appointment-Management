@@ -10,7 +10,8 @@ const SingleAppoint = () => {
     const navigate = useNavigate()
     const {id} = useParams()
     const data = useSelector((state)=>state.appointReducer.singleData)
-    console.log(id)
+    const loading = useSelector((state)=> state.authReducer.lodaing)
+
     React.useEffect(()=>{
         dispatch(singleAppointment(id))
     },[])
@@ -25,8 +26,8 @@ const SingleAppoint = () => {
      <Typography variant='h6' sx={{color: 'green'}}>Appointment Time : {data.time} PM</Typography>
      <Typography variant='h6' sx={{color: 'red'}}>Appointment Date : {data.date}</Typography>
      <Box display="flex" justifyContent="space-between" marginTop="10px" >
-        <Button size="large" variant="outlined" onClick={()=> dispatch(cancelAppointment(data._id))} disabled={data.isCancelled}>Cancel</Button>
-        <Button size="large" variant="outlined" onClick={()=> navigate(`/reschedule/${data._id}`)} disabled={data.isCancelled}>Reschedule</Button>
+        <Button size="large" variant="outlined" onClick={()=> dispatch(cancelAppointment(data._id))} disabled={data.isCancelled || loading}>Cancel</Button>
+        <Button size="large" variant="outlined" onClick={()=> navigate(`/reschedule/${data._id}`)} disabled={data.isCancelled || loading}>Reschedule</Button>
      </Box>
      {data.isCancelled && <Typography variant='h6' align="center" sx={{color: 'red', marginTop: '5px'}}>This appointment was cancelled.</Typography>}
     </Paper>

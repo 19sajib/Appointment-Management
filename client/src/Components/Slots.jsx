@@ -24,6 +24,7 @@ const timeSlots = [
 const Slots = ({dateData, date, time}) => {
 
     const user = useSelector((state)=> state.authReducer.authData)
+    const loading = useSelector((state)=> state.authReducer.lodaing)
     const {id} = useParams()
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -66,7 +67,7 @@ const Slots = ({dateData, date, time}) => {
     </Stack>
     <Box textAlign="center">
     <Typography variant='h6' >Select your desired slot and click the button down below to to reschedule your appointment.</Typography>
-    <Button onClick={handleClick} sx={{marginTop: '15px'}} disabled={!dateTime.time} variant="outlined" size="large">Reschedule Your Appointment</Button>
+    <Button onClick={handleClick} sx={{marginTop: '15px'}} disabled={!dateTime.time || loading} variant="outlined" size="large">Reschedule Your Appointment</Button>
     </Box>
     </Box>
   )

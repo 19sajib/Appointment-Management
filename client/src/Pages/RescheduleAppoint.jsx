@@ -22,7 +22,7 @@ const RescheduleAppoint = () => {
     },[])
     React.useEffect(()=>{
         dispatch(getDate({"date":data.date}))
-    },[])
+    },[data.date])
 
   return (
     <div>

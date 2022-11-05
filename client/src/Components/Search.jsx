@@ -14,6 +14,7 @@ import Select from '@mui/material/Select';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { searchAppointmentData } from '../Actions/AppointAction';
+import { useSelector } from 'react-redux'
 
 function useQuery() {
     return new URLSearchParams(useLocation().search);
@@ -22,6 +23,7 @@ function useQuery() {
 const Search = () => {
 
     const [open, setOpen] = React.useState(false);
+    const loading = useSelector((state)=> state.authReducer.lodaing)
     const [searchType, setSearchType] = React.useState({searchType:""});
     const query = useQuery()
     const dispatch = useDispatch()
@@ -106,8 +108,8 @@ const Search = () => {
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClear}>Clear</Button>
-          <Button onClick={searchAppointment}>Search</Button>
+          <Button disabled={loading} onClick={handleClear}>Clear</Button>
+          <Button disabled={loading} onClick={searchAppointment}>Search</Button>
         </DialogActions>
       </Dialog>
     </div>

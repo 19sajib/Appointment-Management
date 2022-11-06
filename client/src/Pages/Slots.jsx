@@ -3,7 +3,7 @@ import { Stack, Box, Typography, Paper, Divider, IconButton, Button } from '@mui
 import { useSelector } from 'react-redux'
 import HealthAndSafetyIcon from '@mui/icons-material/HealthAndSafety';
 import BlockIcon from '@mui/icons-material/Block';
-import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import Loading from '../Components/Loading'
 import { useNavigate, useParams } from 'react-router-dom';
 import {getSlot} from '../Actions/AppointAction'
 import { useDispatch } from 'react-redux';
@@ -38,11 +38,14 @@ const Slots = () => {
         "time": ""
     })
 
+    if(loading) return <Loading />
+
     const handleClick = (e) => {
         e.preventDefault()
         console.log(bookData)
         dispatch(getSlot(bookData, navigate))
     }
+
   return (
     <Box>
     <Typography variant='h4' align="center" color="secondary">All of the slots of day: {date} Between 9-12 PM.</Typography>
@@ -56,7 +59,7 @@ const Slots = () => {
                  <Typography variant='h6'>Time Slot: {ts}</Typography>
             </Box>
             <Box>
-                {dateData.map((data)=> (
+                {dateData?.map((data)=> (
                    <div key={data._id}> {(data.time===ts && data.isBooked===true)&& 
                     <Box sx={{color: "red", display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
                     <BlockIcon/>

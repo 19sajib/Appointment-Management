@@ -10,13 +10,16 @@ const SingleAppoint = () => {
     const navigate = useNavigate()
     const {id} = useParams()
     const data = useSelector((state)=>state.appointReducer.singleData)
+    const user = useSelector((state)=> state.authReducer.authData)
     const loading = useSelector((state)=> state.authReducer.lodaing)
 
     React.useEffect(()=>{
         dispatch(singleAppointment(id))
     },[])
 
-    if(!data) return <h1>Loading...</h1>
+    
+    if(loading)return <h1>loading...</h1>
+    if(!data) return <h1>No data found...</h1>
 
   return (
     <Paper elevation={4} sx={{padding: '10px', margin: 'auto', width: '50%',}}>

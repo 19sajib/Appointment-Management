@@ -15,14 +15,14 @@ const RescheduleAppoint = () => {
     const data = useSelector((state)=>state.appointReducer.singleData)
     const dateData = useSelector((state)=> state.appointReducer.dateData)
 
-    console.log(data.date)
+    console.log(data?.date)
     console.log(id)
     React.useEffect(()=>{
         dispatch(singleAppointment(id))
     },[])
     React.useEffect(()=>{
-        dispatch(getDate({"date":data.date}))
-    },[data.date])
+        dispatch(getDate({"date":data?.date}))
+    },[data?.date])
 
   return (
     <div>
@@ -32,7 +32,7 @@ const RescheduleAppoint = () => {
                  <Card data={data}/>
             </Grid>
             <Grid item md={8}>
-                 <Slots dateData={dateData} date={data.date} time={data.time}/>
+                 <Slots dateData={dateData} date={data?.date} time={data?.time}/>
             </Grid>
     </Grid>
     </div>

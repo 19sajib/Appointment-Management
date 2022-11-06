@@ -20,8 +20,8 @@ const App = () => {
 
   return (
     <div style={{margin: '10px'}}>
-      <Navbar />
       <BrowserRouter>
+      <Navbar />
           <Routes>
               <Route path="/" exact element={<Home />} />
               <Route path="/success" exact element={user ? <Success />:<Auth />} />

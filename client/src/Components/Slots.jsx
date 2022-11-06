@@ -7,7 +7,7 @@ import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import { useNavigate, useParams } from 'react-router-dom';
 import {getSlot, rescheduleAppointment} from '../Actions/AppointAction'
 import { useDispatch } from 'react-redux';
-
+import Loading from './Loading'
 
 const timeSlots = [
     "9:00-9:20",
@@ -38,7 +38,8 @@ const Slots = ({dateData, date, time}) => {
         console.log(dateTime)
         dispatch(rescheduleAppointment(id, dateTime))
     }
-    if(!dateData) return <h1>Loading...</h1>
+    if(loading) return <Loading />
+
   return (
     <Box>
     <Typography variant='h4' align="center" color="secondary">All of the slots of day: {date} Between 9-12 PM.</Typography>
@@ -52,8 +53,8 @@ const Slots = ({dateData, date, time}) => {
                  <Typography variant='h6'>Time Slot: {ts}</Typography>
             </Box>
             <Box>
-                {dateData.map((data)=> (
-                   <div> {(data?.time===ts && data?.isBooked===true)&&
+                {dateData?.map((data)=> (
+                   <div key={data._id}> {(data?.time===ts && data?.isBooked===true)&&
                     <Box sx={{color: "red", display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
                     <BlockIcon/>
                     <Typography variant='h6'>This slot has been taken</Typography>
@@ -67,7 +68,7 @@ const Slots = ({dateData, date, time}) => {
     </Stack>
     <Box textAlign="center">
     <Typography variant='h6' >Select your desired slot and click the button down below to to reschedule your appointment.</Typography>
-    <Button onClick={handleClick} sx={{marginTop: '15px'}} disabled={!dateTime.time || loading} variant="outlined" size="large">Reschedule Your Appointment</Button>
+    <Button onClick={handleClick} sx={{marginTop: '15px'}} disabled={!dateTime.time || loading || !date} variant="outlined" size="large">Reschedule Your Appointment</Button>
     </Box>
     </Box>
   )

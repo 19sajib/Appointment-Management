@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux'
-
+import { useNavigate } from "react-router-dom";
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -20,6 +20,7 @@ import { signOut } from '../Actions/AuthAction'
 const Navbar = () => {
 
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const user = useSelector((state)=> state.authReducer.authData)
 
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -33,7 +34,7 @@ const Navbar = () => {
   };
 
   const handleSignOut = () => {
-    dispatch(signOut());
+    dispatch(signOut(navigate));
     handleCloseUserMenu();
   }
 
